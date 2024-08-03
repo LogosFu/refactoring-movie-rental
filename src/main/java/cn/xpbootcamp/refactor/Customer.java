@@ -20,11 +20,16 @@ public class Customer {
     }
 
     String statement() {
-        return "Rental Record for " + getName() + "：\n" + renderRow() +
-                buildFooter(getTotalAmount(), getFrequentRenterPoints());
+        return renderHeader()
+                + renderRow()
+                + renderFooter(getTotalAmount(), getFrequentRenterPoints());
     }
 
-    private static StringBuilder buildFooter(double totalAmount, int frequentRenterPoints) {
+    private String renderHeader() {
+        return "Rental Record for " + getName() + "：\n";
+    }
+
+    private static StringBuilder renderFooter(double totalAmount, int frequentRenterPoints) {
         StringBuilder footer = new StringBuilder();
         footer.append("Amount owed is ").append(totalAmount).append("\n");
         footer.append("You earned ").append(frequentRenterPoints).append(" frequent renter points");
