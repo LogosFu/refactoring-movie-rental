@@ -32,44 +32,15 @@ public class Customer {
     }
 
     private double getTotalAmount() {
-        return this.rentals.stream().mapToDouble(Customer::getRowAmount).sum();
+        return this.rentals.stream().mapToDouble(Rental::getRowAmount).sum();
     }
 
     private StringBuilder renderRow() {
-        return this.rentals.stream().map(this::buildRow).reduce(new StringBuilder(), StringBuilder::append);
+        return this.rentals.stream().map(Rental::buildRow).reduce(new StringBuilder(), StringBuilder::append);
     }
 
     private int getFrequentRenterPoints() {
         return this.rentals.stream().mapToInt(Rental::getAddPoint).sum();
-    }
-
-    private StringBuilder buildRow(Rental rental) {
-        StringBuilder row = new StringBuilder();
-        row.append("\t")
-                .append(rental.getMovie().getTitle())
-                .append("\t")
-                .append(getRowAmount(rental)).append("\n");
-        return row;
-    }
-
-    private static double getRowAmount(Rental rental) {
-        double thisAmount = 0d;
-        switch (rental.getMovie().getPriceCode()) {
-            case Movie.HISTORY:
-                thisAmount += 2;
-                if (rental.getDaysRented() > 2)
-                    thisAmount += (rental.getDaysRented() - 2) * 1.5;
-                break;
-            case Movie.NEW_RELEASE:
-                thisAmount += rental.getDaysRented() * 3;
-                break;
-            case Movie.CAMPUS:
-                thisAmount += 1.5;
-                if (rental.getDaysRented() > 3)
-                    thisAmount += (rental.getDaysRented() - 3) * 1.5;
-                break;
-        }
-        return thisAmount;
     }
 
 }
