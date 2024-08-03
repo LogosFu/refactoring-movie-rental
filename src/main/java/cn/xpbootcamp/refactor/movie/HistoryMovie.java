@@ -3,7 +3,7 @@ package cn.xpbootcamp.refactor.movie;
 public class HistoryMovie extends Movie {
      public HistoryMovie(String title) {
 
-        super(title, Movie.HISTORY);
+        super(title, MovieType.HISTORY);
     }
 
     @Override

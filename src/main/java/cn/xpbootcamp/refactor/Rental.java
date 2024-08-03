@@ -1,6 +1,7 @@
 package cn.xpbootcamp.refactor;
 
 import cn.xpbootcamp.refactor.movie.Movie;
+import cn.xpbootcamp.refactor.movie.MovieType;
 
 public class Rental {
 
@@ -21,8 +22,9 @@ public class Rental {
     }
 
     int getAddPoint() {
-        return (getMovie().getPriceCode() == Movie.NEW_RELEASE) && getDaysRented() > 1 ? 2 : 1;
+        return (getMovie().getType() == MovieType.NEW_RELEASE) && getDaysRented() > 1 ? 2 : 1;
     }
+
 
     double getRowAmount() {
         return movie.getAmount(getDaysRented());

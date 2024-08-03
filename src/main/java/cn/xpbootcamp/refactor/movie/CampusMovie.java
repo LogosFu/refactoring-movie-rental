@@ -1,8 +1,8 @@
 package cn.xpbootcamp.refactor.movie;
 
 public class CampusMovie extends Movie {
-   public   CampusMovie(String title) {
-        super(title, Movie.CAMPUS);
+    public CampusMovie(String title) {
+        super(title, MovieType.CAMPUS);
     }
 
     @Override

@@ -2,24 +2,20 @@ package cn.xpbootcamp.refactor.movie;
 
 public abstract class Movie {
 
-    public static final int CAMPUS = 2;
-    public static final int HISTORY = 0;
-    public static final int NEW_RELEASE = 1;
-
     protected String title;
-    protected int priceCode;
+    protected MovieType type;
 
-    Movie(String title, int priceCode) {
+    public Movie(String title, MovieType type) {
         this.title = title;
-        this.priceCode = priceCode;
-    }
-
-    public int getPriceCode() {
-        return priceCode;
+        this.type = type;
     }
 
     public String getTitle() {
         return title;
+    }
+
+    public MovieType getType() {
+        return type;
     }
 
     public abstract double getAmount(int daysRented);
