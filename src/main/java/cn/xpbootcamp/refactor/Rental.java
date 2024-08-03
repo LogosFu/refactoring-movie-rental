@@ -26,9 +26,7 @@ public class Rental {
         double thisAmount = 0d;
         switch (getMovie().getPriceCode()) {
             case Movie.HISTORY:
-                thisAmount += 2;
-                if (getDaysRented() > 2)
-                    thisAmount += (getDaysRented() - 2) * 1.5;
+                thisAmount += getHistoryAmount();
                 break;
             case Movie.NEW_RELEASE:
                 thisAmount += getDaysRented() * 3;
@@ -40,6 +38,14 @@ public class Rental {
                 break;
         }
         return thisAmount;
+    }
+
+    private double getHistoryAmount() {
+        double addAmount = 0d;
+        addAmount += 2;
+        if (getDaysRented() > 2)
+            addAmount += (getDaysRented() - 2) * 1.5;
+        return addAmount;
     }
 
     StringBuilder buildRow() {
