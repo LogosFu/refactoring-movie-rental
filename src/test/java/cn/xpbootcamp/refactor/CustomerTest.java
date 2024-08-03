@@ -12,7 +12,7 @@ class CustomerTest {
         Customer customer = new Customer("老王");
         customer.addRental(new Rental(new Movie("同桌的你", Movie.CAMPUS), 4));
         customer.addRental(new Rental(new Movie("宠爱", Movie.NEW_RELEASE), 5));
-        customer.addRental(new Rental(new Movie("战狼2", Movie.HISTORY), 6));
+        customer.addRental(new Rental(new HistoryMovie("战狼2"), 6));
 
         assertThat("Rental Record for 老王：\n" +
                 "\t同桌的你\t3.0\n" +
