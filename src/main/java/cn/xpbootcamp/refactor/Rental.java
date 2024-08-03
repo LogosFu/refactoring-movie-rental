@@ -18,4 +18,7 @@ public class Rental {
         return daysRented;
     }
 
+    int getAddPoint() {
+        return (getMovie().getPriceCode() == Movie.NEW_RELEASE) && getDaysRented() > 1 ? 2 : 1;
+    }
 }

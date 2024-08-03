@@ -1,6 +1,5 @@
 package cn.xpbootcamp.refactor;
 
-import java.util.Enumeration;
 import java.util.Vector;
 
 public class Customer {
@@ -21,45 +20,56 @@ public class Customer {
     }
 
     String statement() {
-        double totalAmount = 0d;
-        int frequentRenterPoints = 0;
-        StringBuilder result = new StringBuilder("Rental Record for " + getName() + "：\n");
-        for (Rental rental : this.rentals) {
-            //show figures for this rental
-            //determine amounts for rental line
-            double thisAmount = 0d;
-            switch (rental.getMovie().getPriceCode()) {
-                case Movie.HISTORY:
-                    thisAmount += 2;
-                    if (rental.getDaysRented() > 2)
-                        thisAmount += (rental.getDaysRented() - 2) * 1.5;
-                    break;
-                case Movie.NEW_RELEASE:
-                    thisAmount += rental.getDaysRented() * 3;
-                    break;
-                case Movie.CAMPUS:
-                    thisAmount += 1.5;
-                    if (rental.getDaysRented() > 3)
-                        thisAmount += (rental.getDaysRented() - 3) * 1.5;
-                    break;
-            }
-            //add frequent renter points
-            frequentRenterPoints++;
-            if ((rental.getMovie().getPriceCode() == Movie.NEW_RELEASE) && rental.getDaysRented() > 1) {
-                frequentRenterPoints++;
-            }
+        return "Rental Record for " + getName() + "：\n" + renderRow() +
+                buildFooter(getTotalAmount(), getFrequentRenterPoints());
+    }
 
-            //show figures for this rental
-            result.append("\t")
-                    .append(rental.getMovie().getTitle())
-                    .append("\t")
-                    .append(thisAmount).append("\n");
-            totalAmount += thisAmount;
+    private static StringBuilder buildFooter(double totalAmount, int frequentRenterPoints) {
+        StringBuilder footer = new StringBuilder();
+        footer.append("Amount owed is ").append(totalAmount).append("\n");
+        footer.append("You earned ").append(frequentRenterPoints).append(" frequent renter points");
+        return footer;
+    }
+
+    private double getTotalAmount() {
+        return this.rentals.stream().mapToDouble(Customer::getRowAmount).sum();
+    }
+
+    private StringBuilder renderRow() {
+        return this.rentals.stream().map(this::buildRow).reduce(new StringBuilder(), StringBuilder::append);
+    }
+
+    private int getFrequentRenterPoints() {
+        return this.rentals.stream().mapToInt(Rental::getAddPoint).sum();
+    }
+
+    private StringBuilder buildRow(Rental rental) {
+        StringBuilder row = new StringBuilder();
+        row.append("\t")
+                .append(rental.getMovie().getTitle())
+                .append("\t")
+                .append(getRowAmount(rental)).append("\n");
+        return row;
+    }
+
+    private static double getRowAmount(Rental rental) {
+        double thisAmount = 0d;
+        switch (rental.getMovie().getPriceCode()) {
+            case Movie.HISTORY:
+                thisAmount += 2;
+                if (rental.getDaysRented() > 2)
+                    thisAmount += (rental.getDaysRented() - 2) * 1.5;
+                break;
+            case Movie.NEW_RELEASE:
+                thisAmount += rental.getDaysRented() * 3;
+                break;
+            case Movie.CAMPUS:
+                thisAmount += 1.5;
+                if (rental.getDaysRented() > 3)
+                    thisAmount += (rental.getDaysRented() - 3) * 1.5;
+                break;
         }
-        //add footer lines
-        result.append("Amount owed is ").append(totalAmount).append("\n");
-        result.append("You earned ").append(frequentRenterPoints).append(" frequent renter points");
-        return result.toString();
+        return thisAmount;
     }
 
 }
