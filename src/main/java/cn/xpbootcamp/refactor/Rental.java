@@ -1,5 +1,7 @@
 package cn.xpbootcamp.refactor;
 
+import cn.xpbootcamp.refactor.movie.Movie;
+
 public class Rental {
 
     private Movie movie;
@@ -23,19 +25,7 @@ public class Rental {
     }
 
     double getRowAmount() {
-        double thisAmount = 0d;
-        switch (getMovie().getPriceCode()) {
-            case Movie.HISTORY:
-                thisAmount += movie.getAmount(getDaysRented());
-                break;
-            case Movie.NEW_RELEASE:
-                thisAmount += movie.getNewReleaseAmount(getDaysRented());
-                break;
-            case Movie.CAMPUS:
-                thisAmount += movie.getCampusAmount(getDaysRented());
-                break;
-        }
-        return thisAmount;
+        return movie.getAmount(getDaysRented());
     }
 
     StringBuilder buildRow() {

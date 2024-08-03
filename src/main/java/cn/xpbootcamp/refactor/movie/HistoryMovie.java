@@ -1,7 +1,7 @@
-package cn.xpbootcamp.refactor;
+package cn.xpbootcamp.refactor.movie;
 
 public class HistoryMovie extends Movie {
-    HistoryMovie(String title) {
+     public HistoryMovie(String title) {
 
         super(title, Movie.HISTORY);
     }
